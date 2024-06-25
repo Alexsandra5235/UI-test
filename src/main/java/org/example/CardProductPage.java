@@ -1,6 +1,7 @@
 package org.example;
 
 import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -11,6 +12,8 @@ public class CardProductPage extends BasePage{
     /**
      * Выбор размера и цвета товара
      */
+
+    @Attachment
     public void choiceParametersProduct(){
         $(By.xpath("//*[@id=\"option-label-size-143-item-166\"]")).click();
         $(By.xpath("//*[@id=\"option-label-color-93-item-50\"]")).click();

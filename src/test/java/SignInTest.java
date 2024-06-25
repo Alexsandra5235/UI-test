@@ -4,12 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @Owner("Alexandra")
 @DisplayName("Тесты авторизации")
-@ExtendWith(TestListener.class)
 public class SignInTest extends BaseTest{
     /**
      * Авторизация с корректными параметрами

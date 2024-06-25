@@ -1,5 +1,6 @@
 package org.example;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -17,6 +18,7 @@ public class MainPage {
     /**
      * Нажатие на кнопку "Sign In"
      */
+    @Step("Нажатие на ссылку Sign In в верхней левой части сайта")
     public SignInPage tabSignIn(){
         $$(By.xpath("//ul[@class=\"header links\"]/li/a")).first().click();
         return new SignInPage();
@@ -24,12 +26,14 @@ public class MainPage {
     /**
      * Нажатие на кнопку открытия выпадающего списка перехода между страницами
      */
+    @Step("Нажатие на выпадающий список перехода между страницами")
     public void tabDropDown(){
         $$(By.xpath("//button[@class=\"action switch\"]")).first().click();
     }
     /**
      * Нажатие на кнопку "My Account"
      */
+    @Step("Нажатие в выпадающем списке на кнопку My Account")
     public MyAccountPage tabMyAccount(){
         $$(By.xpath("//ul[@class=\"header links\"]/li/a")).first().click();
         return new MyAccountPage();
@@ -37,6 +41,7 @@ public class MainPage {
     /**
      * Проверка отображения элемента страницы
      */
+    @Step("Проверка отображения элемента //div[@class=\"sections nav-sections\"] на главной странице сайта")
     public boolean visibleItemPage(){
         return $(By.xpath("//div[@class=\"sections nav-sections\"]")).shouldBe(visible).isDisplayed();
     }
