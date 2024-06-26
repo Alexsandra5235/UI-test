@@ -9,7 +9,7 @@ public class Constants {
             authorizationEmail ="sm@gmail.com",
             incorrectEmail = "Random56.text",
             invalidPassword = "Invalid56",
-            newEmail = "emailNew@gmail.com",
+            newEmail = "newEm@gmail.com",
             searchQuery = "Short",
             optionIdSizeXs = "166",
             optionsIdColorBlack = "49",
