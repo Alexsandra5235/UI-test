@@ -2,14 +2,14 @@ package org.example;
 
 public class Constants {
     public final String url = "https://magento.softwaretestingboard.com",
-            createAccountEmail = "create01@gmail.com",
+            createAccountEmail = "emailCreate@gmail.com",
             password = "Password56",
             firstName = "Иван",
             lastName = "Пупкин",
-            authorizationEmail ="authorization@gmail.com",
+            authorizationEmail ="sm@gmail.com",
             incorrectEmail = "Random56.text",
             invalidPassword = "Invalid56",
-            newEmail = "new01@gmail.com",
+            newEmail = "emailNew@gmail.com",
             searchQuery = "Short",
             optionIdSizeXs = "166",
             optionsIdColorBlack = "49",

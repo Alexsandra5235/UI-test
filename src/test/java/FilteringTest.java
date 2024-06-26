@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Alexandra")
 @DisplayName("Тесты фильтрации товаров")
+@Tag("filter")
 public class FilteringTest extends BaseTest {
     /**
      * Фильтрация товаров по цвету и размеру

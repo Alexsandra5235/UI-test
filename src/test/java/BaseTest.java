@@ -1,9 +1,12 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideWait;
 import org.example.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
 @ExtendWith(ScreenshotAttached.class)

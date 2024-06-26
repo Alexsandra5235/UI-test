@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Alexandra")
-@DisplayName("Тесты добавления товара в корзину")
+@DisplayName("Тесты добавления товара в избранное")
+@Tag("addToWishList")
 public class AddProductToWishListTest extends BaseTest{
     /**
      * Добавление товара в избранное авторизированным пользователем
@@ -32,6 +33,5 @@ public class AddProductToWishListTest extends BaseTest{
 
         assertTrue(wishListPage.visibleMessengerSuccess());
 
-        wishListPage.tabDeleteProduct();
     }
 }

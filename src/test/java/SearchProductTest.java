@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Alexandra")
 @DisplayName("Тесты поиска товаров")
+@Tag("search")
 public class SearchProductTest extends BaseTest{
     /**
      * Поиск товаров по ключевому слову

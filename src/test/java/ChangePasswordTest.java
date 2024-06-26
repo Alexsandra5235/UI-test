@@ -1,10 +1,14 @@
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Owner("Alexandra")
+@DisplayName("Тесты изменения Password учетной записи пользователя")
+@Tag("changePassword")
 public class ChangePasswordTest extends BaseTest{
     /**
      * Изменение пароля с корректными параметрами

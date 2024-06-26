@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Alexandra")
 @DisplayName("Тесты добавления товара в корзину")
+@Tag("addToCard")
 public class AddProductToCardTest extends BaseTest{
     /**
      * Добавление товара в корзину авторизированным пользователем
@@ -31,8 +32,5 @@ public class AddProductToCardTest extends BaseTest{
         cardProductPage.tabAddToCard();
 
         assertTrue(cardProductPage.visibleMessengerSuccess());
-
-        cardProductPage.tabCard();
-        cardProductPage.tabDeleteProduct();
     }
 }

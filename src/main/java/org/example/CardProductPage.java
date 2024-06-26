@@ -4,6 +4,8 @@ import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.By;
 import io.qameta.allure.Step;
+
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -24,14 +26,14 @@ public class CardProductPage extends BasePage{
     @Step("Нажатие на кнопку Add To Card")
     public void tabAddToCard(){
         $(By.xpath("//*[@id=\"product-addtocart-button\"]")).click();
+        Selenide.sleep(3000);
     }
     /**
      * Нажатие на логотип корзины
      */
     @Step("Нажатие на логотип корзины в верхнем правом углу страницы")
     public void tabCard(){
-        $(By.xpath("//a[@class=\"action showcart\"]")).click();
-        Selenide.sleep(3000);
+        $(By.xpath("//div[@data-block=\"minicart\"]")).click();
     }
     /**
      * Удаление товара из корзины
@@ -55,7 +57,7 @@ public class CardProductPage extends BasePage{
      */
     @Step("Нажатие на кнопку Proceed To Checkout")
     public CheckoutPage tabProceedToCheckout(){
-        $(By.xpath("//*[@id=\"top-cart-btn-checkout\"]")).click();
+        $(By.xpath("//*[@id=\"top-cart-btn-checkout\"]")).shouldBe(exist).click();
         return new CheckoutPage();
     }
     /**

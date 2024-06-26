@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Alexandra")
 @DisplayName("Тесты оформления заказа")
+@Tag("makingOrder")
 public class MakingOrderTest extends BaseTest {
     /**
      * Оформление заказа с коректными параметрами

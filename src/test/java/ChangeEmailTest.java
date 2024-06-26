@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Owner("Alexandra")
 @DisplayName("Тесты изменения Email учетной записи пользователя")
+@Tag("changeEmail")
 public class ChangeEmailTest extends BaseTest{
     /**
      * Изменение Email с корректными параметрами
