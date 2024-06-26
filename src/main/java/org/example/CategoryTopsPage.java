@@ -8,11 +8,13 @@ import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import io.qameta.allure.Step;
 
 public class CategoryTopsPage extends BasePage{
     /**
      * Выбор размера
      */
+    @Step("Выбор размера товара")
     public void choiceSize(){
         $(By.xpath("//*[@id=\"narrow-by-list\"]/div[3]")).click();
         $(By.xpath("//div[@data-role=\"content\"]//*[@option-id=\"166\"]")).click();
@@ -20,19 +22,22 @@ public class CategoryTopsPage extends BasePage{
     /**
      * Выбор цвета
      */
+    @Step("Выбор цвета товара")
     public void choiceColor(){
         $(By.xpath("//*[@id=\"narrow-by-list\"]/div[4]")).click();
         $(By.xpath("//div[@data-role=\"content\"]//*[@option-id=\"49\"]")).click();
     }
     /**
-     * Нажатие кнопки для перехода на другую страницу
+     * Нажатие кнопку для перехода на следующую страницу
      */
+    @Step("Нажатие кнопку для перехода на следующую страницу товаров")
     public void tabNextPage(){
         $$(By.xpath("//div[@class=\"pages\"]//li[@class=\"item pages-item-next\"]/a")).last().click();
     }
     /**
      * Проверка правильности фильтровки товара
      */
+    @Step("Проверка корректности фильтровки товара")
     public boolean correctFiltering(){
         List<String> listSize = $$(By.xpath("//li[@class=\"item product product-item\"]//div[@class=\"swatch-attribute size\"]"))
                 .asFixedIterable().stream().map(elem->elem.getAttribute("option-selected")).toList();
@@ -47,6 +52,7 @@ public class CategoryTopsPage extends BasePage{
     /**
      * Проверка пагинации сайта
      */
+    @Step("Проверка пагинации на сайте")
     public int pagination(){
         List<String> listOnePage = $$(By.xpath("//li[@class=\"item product product-item\"]//a[@class=\"product photo product-item-photo\"]"))
                 .asFixedIterable().stream().map(elem->elem.getAttribute("href")).toList();

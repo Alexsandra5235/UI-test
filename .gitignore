@@ -13,6 +13,9 @@ target/
 *.ipr
 .idea
 allure-results
+mvnw
+mvnw.cmd
+.mvn
 
 ### Eclipse ###
 .apt_generated

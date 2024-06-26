@@ -1,6 +1,7 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,6 +14,7 @@ public class ChangeEmailTest extends BaseTest{
      */
     @DisplayName("Изменение Email с корректными параметрами")
     @Description("Авторизация пользователя, переход на страницу пользователя в раздел изменения пользовательских данных, ввод данных для изменения Email")
+    @Tag("positive")
     @Test
     public void correctParameters(){
         mainPage.tabSignIn();

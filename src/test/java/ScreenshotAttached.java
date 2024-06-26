@@ -6,6 +6,7 @@ import org.openqa.selenium.TakesScreenshot;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
+
 public class ScreenshotAttached implements AfterTestExecutionCallback {
 
     public void afterTestExecution(ExtensionContext context) {

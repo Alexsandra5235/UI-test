@@ -1,6 +1,7 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,6 +14,7 @@ public class AddProductToCardTest extends BaseTest{
      */
     @DisplayName("Добавление товара в корзину авторизированным пользователем")
     @Description("Авторизация пользователя, переход к карточке товара, нажатие на кнопку Add To Card")
+    @Tag("positive")
     @Test
     public void authorizationUsers(){
         mainPage.tabSignIn();

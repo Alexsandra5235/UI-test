@@ -11,6 +11,7 @@ public class MainPage {
     /**
      * Нажатие на кнопку "Create An Account"
      */
+    @Step("Нажатие на кнопку Create An Account")
     public CreateNewAccountPage tabCreateAnAccount(){
         $(By.xpath("//div[@class=\"panel header\"]/ul[@class=\"header links\"]/li[3]/a")).click();
         return new CreateNewAccountPage();
@@ -18,7 +19,7 @@ public class MainPage {
     /**
      * Нажатие на кнопку "Sign In"
      */
-    @Step("Нажатие на ссылку Sign In в верхней левой части сайта")
+    @Step("Нажатие на ссылку Sign In в верхней правой части сайта")
     public SignInPage tabSignIn(){
         $$(By.xpath("//ul[@class=\"header links\"]/li/a")).first().click();
         return new SignInPage();
@@ -41,7 +42,7 @@ public class MainPage {
     /**
      * Проверка отображения элемента страницы
      */
-    @Step("Проверка отображения элемента //div[@class=\"sections nav-sections\"] на главной странице сайта")
+    @Step("Проверка отображения элемента на главной странице сайта")
     public boolean visibleItemPage(){
         return $(By.xpath("//div[@class=\"sections nav-sections\"]")).shouldBe(visible).isDisplayed();
     }

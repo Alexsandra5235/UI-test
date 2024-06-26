@@ -12,7 +12,7 @@ public class MyAccountPage extends BasePage{
      * Проверка появления сообщения об успешном создании аккаунта
      * @return
      */
-
+    @Step("Проверка появления сообщения об успешном создании аккаунта")
     public boolean visibleMessengerSuccessCreateAccount(){
         return $(By.xpath("//*[@id=\"maincontent\"]/div[1]")).shouldBe(visible).isDisplayed();
     }
@@ -28,6 +28,7 @@ public class MyAccountPage extends BasePage{
     /**
      * Нажатие на категорию "Women"
      */
+    @Step("Нажатие на категорию Women")
     public CategoryWomenPage tabWomen(){
         $(By.xpath("//*[@id=\"ui-id-4\"]")).click();
         return new CategoryWomenPage();
@@ -35,6 +36,7 @@ public class MyAccountPage extends BasePage{
     /**
      * Нажатие на категорию "Tops"
      */
+    @Step("Нажатие на категорию Tops")
     public CategoryTopsPage tabTops(){
         $(By.xpath("//*[@id=\"ui-id-4\"]")).hover();
         $(By.xpath("//*[@id=\"ui-id-9\"]")).click();
@@ -43,6 +45,7 @@ public class MyAccountPage extends BasePage{
     /**
      * Ввод текстового запроса
      */
+    @Step("Ввод текстового запроса")
     public ResultQueryPage fullingSearchQuery(){
         $(By.xpath("//*[@id=\"search\"]")).sendKeys(constants.searchQuery);
         $(By.xpath("//*[@id=\"search\"]")).sendKeys(Keys.ENTER);
@@ -51,6 +54,7 @@ public class MyAccountPage extends BasePage{
     /**
      * Проверка отображения элементов страницы
      */
+    @Step("Проверка отображения элемента на странице My Account")
     public boolean visibleItemPage(){
         return $$(By.xpath("//*[@class=\"box box-information\"]//a")).first().shouldBe(visible).isDisplayed();
     }

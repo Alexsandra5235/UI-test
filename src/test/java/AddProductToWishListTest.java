@@ -2,6 +2,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,6 +15,7 @@ public class AddProductToWishListTest extends BaseTest{
      */
     @DisplayName("Добавление товара в избранное авторизированным пользователем")
     @Description("Авторизация пользователя, переход к карточке товара, нажатие на кнопку Add To Wish List")
+    @Tag("positive")
     @Test
     public void authorizationUsers(){
         mainPage.tabSignIn();

@@ -44,9 +44,9 @@ public class AccountInformationPage extends BasePage{
         $(By.xpath("//*[@id=\"current-password\"]")).sendKeys(currentPassword);
     }
     /**
-     * Заполнение поля "New Password" и "ConfirmNewPassword"
+     * Заполнение поля "New Password" и "Confirm New Password"
      */
-    @Step("Заполнение поля New Password и ConfirmNewPassword")
+    @Step("Заполнение поля New Password и Confirm New Password")
     public void fullingNewPassword(String newPassword){
         $(By.xpath("//*[@id=\"password\"]")).sendKeys(newPassword);
         $(By.xpath("//*[@id=\"password-confirmation\"]")).sendKeys(newPassword);
@@ -54,6 +54,7 @@ public class AccountInformationPage extends BasePage{
     /**
      * Проверка сообщения о не совпадении текущего пароля с введенным значением
      */
+    @Step("Проверка появления сообщения о не совпадении текущего пароля с введенным пользователм значением")
     public boolean visibleMessengerInvalidCurrentPassword(){
         return $(By.xpath("//div[@data-ui-id=\"message-error\"]")).shouldBe(visible).isDisplayed();
     }
