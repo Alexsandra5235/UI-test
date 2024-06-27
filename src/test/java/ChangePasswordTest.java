@@ -1,8 +1,8 @@
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.example.Constants;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,71 +11,58 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Tag("changePassword")
 public class ChangePasswordTest extends BaseTest{
     /**
-     * Изменение пароля с корректными параметрами
-     */
-    @DisplayName("Изменение Email с корректными параметрами")
-    @Description("Авторизация пользователя, переход на страницу пользователя в раздел изменения пользовательских данных, ввод данных для изменения пароля")
-    @Tag("positive")
-    @Test
-    public void correctParameters(){
-        mainPage.tabSignIn();
-
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        mainPage.tabDropDown();
-        mainPage.tabMyAccount();
-
-        myAccountPage.tabEdit();
-
-        accountInformationPage.tabCheckBoxChangePassword();
-        accountInformationPage.fullingNewPassword(constants.invalidPassword);
-        accountInformationPage.fullingCurrentPassword(constants.password);
-        accountInformationPage.tabSave();
-
-        assertTrue(signInPage.visibleMessengerSuccessChange());
-
-        //Меняем пароль обратно
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.invalidPassword);
-        signInPage.tabSignIn();
-
-        mainPage.tabDropDown();
-        mainPage.tabMyAccount();
-
-        myAccountPage.tabEdit();
-
-        accountInformationPage.tabCheckBoxChangePassword();
-        accountInformationPage.fullingNewPassword(constants.password);
-        accountInformationPage.fullingCurrentPassword(constants.invalidPassword);
-        accountInformationPage.tabSave();
-
-    }
-    /**
      * Изменение пароля с неверным параметром "Current Password"
      */
-    @DisplayName("Изменение Email с неверным параметром Current Password")
+    @Order(1)
+    @DisplayName("Изменение Password с неверным параметром Current Password")
     @Description("Авторизация пользователя, переход на страницу пользователя в раздел изменения пользовательских данных, ввод данных для изменения пароля")
     @Tag("negative")
     @Test
     public void invalidCurrentPassword(){
-        mainPage.tabSignIn();
-
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
         mainPage.tabDropDown();
-        mainPage.tabMyAccount();
+        myAccountPage = mainPage.tabMyAccount();
+        accountInformationPage = myAccountPage.tabEdit();
+        accountInformationPage.tabChangePasswordCheckBox();
+        accountInformationPage.fullingUserDataChangePassword(Constants.invalidPassword,Constants.invalidPassword);
+        signInPage = accountInformationPage.tabSave();
 
-        myAccountPage.tabEdit();
+        assertTrue(accountInformationPage.isVisibleMessengerInvalidCurrentPassword());
+    }
+    /**
+     * Изменение пароля с корректными параметрами
+     */
+    @Order(2)
+    @DisplayName("Изменение Password с корректными параметрами")
+    @Description("Авторизация пользователя, переход на страницу пользователя в раздел изменения пользовательских данных, ввод данных для изменения пароля")
+    @Tag("positive")
+    @Test
+    public void correctParameters(){
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
+        mainPage.tabDropDown();
+        myAccountPage = mainPage.tabMyAccount();
+        accountInformationPage = myAccountPage.tabEdit();
+        accountInformationPage.tabChangePasswordCheckBox();
+        accountInformationPage.fullingUserDataChangePassword(Constants.invalidPassword,Constants.password);
+        signInPage = accountInformationPage.tabSave();
 
-        accountInformationPage.tabCheckBoxChangePassword();
-        accountInformationPage.fullingNewPassword(constants.invalidPassword);
-        accountInformationPage.fullingCurrentPassword(constants.invalidPassword);
-        accountInformationPage.tabSave();
-
-        assertTrue(accountInformationPage.visibleMessengerInvalidCurrentPassword());
+        assertTrue(signInPage.isVisibleMessengerSuccessChange());
+    }
+    @AfterAll
+    public static void back(){
+        Selenide.open(Constants.url);
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.invalidPassword);
+        mainPage = signInPage.tabSignIn();
+        mainPage.tabDropDown();
+        myAccountPage = mainPage.tabMyAccount();
+        accountInformationPage = myAccountPage.tabEdit();
+        accountInformationPage.tabChangePasswordCheckBox();
+        accountInformationPage.fullingUserDataChangePassword(Constants.password,Constants.invalidPassword);
+        signInPage = accountInformationPage.tabSave();
     }
 }

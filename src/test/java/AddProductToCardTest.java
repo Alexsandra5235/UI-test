@@ -1,5 +1,6 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,19 +19,14 @@ public class AddProductToCardTest extends BaseTest{
     @Tag("positive")
     @Test
     public void authorizationUsers(){
-        mainPage.tabSignIn();
-
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        myAccountPage.tabWomen();
-
-        categoryWomenPage.tabCardProduct();
-
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
+        categoryWomenPage = mainPage.tabWomen();
+        cardProductPage = categoryWomenPage.tabCardProduct();
         cardProductPage.choiceParametersProduct();
         cardProductPage.tabAddToCard();
 
-        assertTrue(cardProductPage.visibleMessengerSuccess());
+        assertTrue(cardProductPage.isVisibleMessengerSuccess());
     }
 }

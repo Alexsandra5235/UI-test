@@ -19,7 +19,7 @@ public class ScreenshotAttached implements AfterTestExecutionCallback {
         }
     }
 
-    @Attachment(value = "Page screenshot", type = "image/png")
+    @Attachment(value = "Page screenshot", type = "image/html")
     protected static byte[] saveAllureScreenshot() {
         byte[] screen = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
 

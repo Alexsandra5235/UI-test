@@ -1,5 +1,6 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -20,16 +21,12 @@ public class CreateAnAccountTest extends BaseTest{
     @Tag("positive")
     @Test
     public void validParameters(){
-        mainPage.tabCreateAnAccount();
+        createNewAccountPage = mainPage.tabCreateAnAccount();
+        createNewAccountPage.fillingUserInformation(Constants.createAccountEmail,Constants.password);
+        myAccountPage = createNewAccountPage.tabCreateAnAccount();
 
-        createNewAccountPage.fillingUserInformation();
-        createNewAccountPage.fullingEmail();
-        createNewAccountPage.fullingPassword();
-        createNewAccountPage.tabCreateAnAccount();
-
-        assertTrue(myAccountPage.visibleMessengerSuccessCreateAccount());
+        assertTrue(myAccountPage.isVisibleMessengerSuccessCreateAccount());
     }
-
     /**
      * Создание аккаунта без параметров
      */
@@ -38,11 +35,10 @@ public class CreateAnAccountTest extends BaseTest{
     @Tag("negative")
     @Test
     public void emptyParameters(){
-        mainPage.tabCreateAnAccount();
-
+        createNewAccountPage = mainPage.tabCreateAnAccount();
         createNewAccountPage.tabCreateAnAccount();
 
-        assertTrue(createNewAccountPage.visibleMessengerEmptyParameters());
+        assertTrue(createNewAccountPage.isVisibleMessengerEmptyParameters());
     }
     /**
      * Создание аккаунта с зарегестрированным Email
@@ -52,14 +48,11 @@ public class CreateAnAccountTest extends BaseTest{
     @Tag("negative")
     @Test
     public void registeredEmail(){
-        mainPage.tabCreateAnAccount();
-
-        createNewAccountPage.fillingUserInformation();
-        createNewAccountPage.fullingRegisteredEmail();
-        createNewAccountPage.fullingPassword();
+        createNewAccountPage = mainPage.tabCreateAnAccount();
+        createNewAccountPage.fillingUserInformation(Constants.authorizationEmail,Constants.password);
         createNewAccountPage.tabCreateAnAccount();
 
-        assertTrue(createNewAccountPage.visibleMessengerRegisteredEmail());
+        assertTrue(createNewAccountPage.isVisibleMessengerRegisteredEmail());
     }
     /**
      * Создание аккаунта с некорректным Email
@@ -69,13 +62,10 @@ public class CreateAnAccountTest extends BaseTest{
     @Tag("negative")
     @Test
     public void incorrectEmail(){
-        mainPage.tabCreateAnAccount();
-
-        createNewAccountPage.fillingUserInformation();
-        createNewAccountPage.fullingIncorrectEmail();
-        createNewAccountPage.fullingPassword();
+        createNewAccountPage = mainPage.tabCreateAnAccount();
+        createNewAccountPage.fillingUserInformation(Constants.incorrectEmail,Constants.password);
         createNewAccountPage.tabCreateAnAccount();
 
-        assertTrue(createNewAccountPage.visibleMessengerIncorrectEmail());
+        assertTrue(createNewAccountPage.isVisibleMessengerIncorrectEmail());
     }
 }

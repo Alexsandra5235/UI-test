@@ -1,9 +1,9 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,13 +21,11 @@ public class SignInTest extends BaseTest{
     @Tag("positive")
     @Test
     public void validParameters(){
-        mainPage.tabSignIn();
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
 
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        assertTrue(mainPage.visibleItemPage());
+        assertTrue(mainPage.isVisibleItemPage());
     }
     /**
      * Авторизация без параметров
@@ -37,11 +35,10 @@ public class SignInTest extends BaseTest{
     @Tag("negative")
     @Test
     public void emptyParameters(){
-        mainPage.tabSignIn();
-
+        signInPage = mainPage.tabSignIn();
         signInPage.tabSignIn();
 
-        assertTrue(signInPage.visibleMessengerEmptyParameters());
+        assertTrue(signInPage.isVisibleMessengerEmptyParameters());
     }
     /**
      * Авторизация с неверным паролем
@@ -51,12 +48,10 @@ public class SignInTest extends BaseTest{
     @Tag("negative")
     @Test
     public void invalidPassword(){
-        mainPage.tabSignIn();
-
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.invalidPassword);
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.invalidPassword);
         signInPage.tabSignIn();
 
-        assertTrue(signInPage.visibleMessengerInvalidPassword());
+        assertTrue(signInPage.isVisibleMessengerInvalidPassword());
     }
 }

@@ -1,6 +1,6 @@
 package org.example;
 
-public class Constants {
+public interface Constants {
     public final String url = "https://magento.softwaretestingboard.com",
             createAccountEmail = "emailCreate@gmail.com",
             password = "Password56",

@@ -1,5 +1,6 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,24 +19,18 @@ public class MakingOrderTest extends BaseTest {
     @Tag("positive")
     @Test
     public void correctParameters(){
-        mainPage.tabSignIn();
-
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        myAccountPage.tabWomen();
-
-        categoryWomenPage.tabCardProduct();
-
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
+        categoryWomenPage = mainPage.tabWomen();
+        cardProductPage = categoryWomenPage.tabCardProduct();
         cardProductPage.choiceParametersProduct();
         cardProductPage.tabAddToCard();
         cardProductPage.tabCard();
-        cardProductPage.tabProceedToCheckout();
-
+        checkoutPage = cardProductPage.tabProceedToCheckout();
         checkoutPage.tabNext();
-        checkoutPage.tabPlaceOrder();
+        successPage = checkoutPage.tabPlaceOrder();
 
-        assertTrue(successPage.visibleItemPage());
+        assertTrue(successPage.isVisibleItemPage());
     }
 }

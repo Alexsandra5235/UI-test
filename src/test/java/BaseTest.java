@@ -4,38 +4,30 @@ import org.example.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-
 
 @ExtendWith(ScreenshotAttached.class)
 abstract public class BaseTest {
-    Constants constants = new Constants();
-    SignInPage signInPage = new SignInPage();
-    MainPage mainPage = new MainPage();
-    AccountInformationPage accountInformationPage = new AccountInformationPage();
-    MyAccountPage myAccountPage = new MyAccountPage();
-    CardProductPage cardProductPage = new CardProductPage();
-    CategoryTopsPage categoryTopsPage = new CategoryTopsPage();
-    CategoryWomenPage categoryWomenPage = new CategoryWomenPage();
-    WishListPage wishListPage = new WishListPage();
-    CreateNewAccountPage createNewAccountPage = new CreateNewAccountPage();
-    CheckoutPage checkoutPage = new CheckoutPage();
-    SuccessPage successPage = new SuccessPage();
-    ResultQueryPage resultQueryPage = new ResultQueryPage();
+    static MainPage mainPage = new MainPage();
+    static AccountInformationPage accountInformationPage;
+    static MyAccountPage myAccountPage;
+    static CardProductPage cardProductPage;
+    static CategoryTopsPage categoryTopsPage;
+    static CategoryWomenPage categoryWomenPage;
+    static WishListPage wishListPage;
+    static CreateNewAccountPage createNewAccountPage;
+    static CheckoutPage checkoutPage;
+    static SuccessPage successPage;
+    static ResultQueryPage resultQueryPage;
+    static SignInPage signInPage;
 
     public void SetUp(){
         Configuration.browser = "edge";
-        Configuration.headless = false;
     }
 
     @BeforeEach
     public void Init(){
         SetUp();
-        Selenide.open(constants.url);
+        Selenide.open(Constants.url);
     }
 
     @AfterEach()

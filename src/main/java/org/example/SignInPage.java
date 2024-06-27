@@ -1,55 +1,60 @@
 package org.example;
 
-import org.openqa.selenium.By;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
+
 import io.qameta.allure.Step;
 
 public class SignInPage {
+
+    public final SelenideElement
+            textBoxEmail = $x("//*[@id=\"email\"]"),
+            textBoxPassword = $x("//*[@id=\"pass\"]"),
+            buttonSignIn = $x("//*[@id=\"send2\"]"),
+            messageError = $x("//div[@data-ui-id=\"message-error\"]"),
+            messageSuccess = $x("//div[@data-ui-id=\"message-success\"]");
+    public final ElementsCollection
+            messageEmptyTextBoxError = $$x("//*[@class=\"mage-error\"]");
+
     /**
-     * Заполнение почты
+     * Заполнение почты и пароля
      */
-    @Step("Заполнение текстового поля Email")
-    public void fullingEmail(String email){
-        $(By.xpath("//*[@id=\"email\"]")).sendKeys(email);
-    }
-    /**
-     * Заполненение пароля
-     */
-    @Step("Заполнение текстового поля Password")
-    public void fullingPassword(String password){
-        $(By.xpath("//*[@id=\"pass\"]")).sendKeys(password);
+    @Step("Заполнение текстового поля Email и Password")
+    public void fullingEmailAndPassword(String email, String password){
+        textBoxEmail.shouldBe(visible).sendKeys(email);
+        textBoxPassword.shouldBe(visible).sendKeys(password);
     }
     /**
      * Нажатие на кнопку "Sign In"
      */
     @Step("Нажатие на кнопку Sign In")
-    public MyAccountPage tabSignIn(){
-        $(By.xpath("//*[@id=\"send2\"]")).click();
-        return new MyAccountPage();
+    public MainPage tabSignIn(){
+        buttonSignIn.shouldBe(visible).click();
+        return new MainPage();
     }
     /**
      * Проверка сообщения о необходимости заполнить поля
      */
     @Step("Проверка отображения сообщения о необходимости заполнить поля")
-    public boolean visibleMessengerEmptyParameters(){
-        return $$(By.xpath("//*[@class=\"mage-error\"]")).asFixedIterable().stream().
+    public boolean isVisibleMessengerEmptyParameters(){
+        return messageEmptyTextBoxError.asFixedIterable().stream().
                 allMatch(mess->mess.shouldBe(visible).isDisplayed());
     }
     /**
      * Проверка сообщения о неверно указаном пароле
      */
     @Step("Проверка отображения сообщения о неверно указаном пароле")
-    public boolean visibleMessengerInvalidPassword(){
-        return $(By.xpath("//*[@id=\"maincontent\"]/ div[2]")).shouldBe(visible).isDisplayed();
+    public boolean isVisibleMessengerInvalidPassword(){
+        return messageError.shouldBe(visible).isDisplayed();
     }
     /**
-     * Проверка сообщения об успешно измененной почте
+     * Проверка сообщения об успешном изменении почты или пароля
      */
-    @Step("Проверка появления сообщения об успешно измененной почте")
-    public boolean visibleMessengerSuccessChange(){
-        return $(By.xpath("//div[@data-ui-id=\"message-success\"]")).shouldBe(visible).isDisplayed();
+    @Step("Проверка появления сообщения об успешно измененных данных")
+    public boolean isVisibleMessengerSuccessChange(){
+        return messageSuccess.shouldBe(visible).isDisplayed();
     }
 }

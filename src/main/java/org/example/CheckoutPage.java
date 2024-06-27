@@ -1,17 +1,26 @@
 package org.example;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+
 import io.qameta.allure.Step;
 
-public class CheckoutPage extends BasePage{
+public class CheckoutPage {
+
+    public final SelenideElement
+            buttonPlaceOrder = $x("//button[@class=\"action primary checkout\"]"),
+            buttonNext = $x("//button[@data-role=\"opc-continue\"]");
     /**
      * Нажатие на кнопку "Place Order"
      */
     @Step("Нажатие на кнопку Place Order")
     public SuccessPage tabPlaceOrder(){
-        $(By.xpath("//button[@class=\"action primary checkout\"]")).click();
+        buttonPlaceOrder.shouldBe(visible).click();
         return new SuccessPage();
     }
     /**
@@ -19,7 +28,6 @@ public class CheckoutPage extends BasePage{
      */
     @Step("Нажатие на кнопку Next")
     public void tabNext(){
-        $(By.xpath("//button[@data-role=\"opc-continue\"]")).click();
-        Selenide.sleep(3000);
+        buttonNext.shouldBe(visible).click();
     }
 }

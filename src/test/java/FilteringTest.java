@@ -1,5 +1,6 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,18 +20,15 @@ public class FilteringTest extends BaseTest {
     @Tag("positive")
     @Test
     public void colorAndSize(){
-        mainPage.tabSignIn();
+        signInPage = mainPage.tabSignIn();
 
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        myAccountPage.tabTops();
-
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail, Constants.password);
+        mainPage = signInPage.tabSignIn();
+        categoryTopsPage = mainPage.tabTops();
         categoryTopsPage.choiceSize();
         categoryTopsPage.choiceColor();
 
-        assertTrue(categoryTopsPage.correctFiltering());
+        assertTrue(categoryTopsPage.isCorrectFiltering());
     }
     /**
      * Пагинация
@@ -40,14 +38,11 @@ public class FilteringTest extends BaseTest {
     @Tag("positive")
     @Test
     public void Pagination(){
-        mainPage.tabSignIn();
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail, Constants.password);
+        mainPage = signInPage.tabSignIn();
+        categoryTopsPage = mainPage.tabTops();
 
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        myAccountPage.tabTops();
-
-        assertEquals(24,categoryTopsPage.pagination());
+        assertTrue(categoryTopsPage.isCheckPagination());
     }
 }

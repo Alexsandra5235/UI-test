@@ -1,5 +1,6 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,14 +19,11 @@ public class SearchProductTest extends BaseTest{
     @Tag("positive")
     @Test
     public void searchKeyword(){
-        mainPage.tabSignIn();
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
+        resultQueryPage = mainPage.fullingSearchQuery();
 
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        myAccountPage.fullingSearchQuery();
-
-        assertTrue(resultQueryPage.containsKeyword());
+        assertTrue(resultQueryPage.isContainsKeyword());
     }
 }

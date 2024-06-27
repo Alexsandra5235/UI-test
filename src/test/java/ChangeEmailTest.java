@@ -1,5 +1,8 @@
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
+import org.example.Constants;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,37 +21,29 @@ public class ChangeEmailTest extends BaseTest{
     @Tag("positive")
     @Test
     public void correctParameters(){
-        mainPage.tabSignIn();
-
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
         mainPage.tabDropDown();
-        mainPage.tabMyAccount();
+        myAccountPage = mainPage.tabMyAccount();
+        accountInformationPage = myAccountPage.tabEdit();
+        accountInformationPage.tabChangeEmailCheckBox();
+        accountInformationPage.fullingUserDataChangeEmail(Constants.newEmail,Constants.password);
+        signInPage = accountInformationPage.tabSave();
 
-        myAccountPage.tabEdit();
-
-        accountInformationPage.tabCheckBoxChangeEmail();
-        accountInformationPage.fullingNewEmail(constants.newEmail);
-        accountInformationPage.fullingCurrentPassword(constants.password);
-        accountInformationPage.tabSave();
-
-        assertTrue(signInPage.visibleMessengerSuccessChange());
-
-        //Меняем почту обратно
-        signInPage.fullingEmail(constants.newEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
+        assertTrue(signInPage.isVisibleMessengerSuccessChange());
+    }
+    @AfterAll
+    public static void back(){
+        Selenide.open(Constants.url);
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.newEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
         mainPage.tabDropDown();
-        mainPage.tabMyAccount();
-
-        myAccountPage.tabEdit();
-
-        accountInformationPage.tabCheckBoxChangeEmail();
-        accountInformationPage.fullingNewEmail(constants.authorizationEmail);
-        accountInformationPage.fullingCurrentPassword(constants.password);
-        accountInformationPage.tabSave();
+        myAccountPage = mainPage.tabMyAccount();
+        accountInformationPage = myAccountPage.tabEdit();
+        accountInformationPage.tabChangeEmailCheckBox();
+        accountInformationPage.fullingUserDataChangeEmail(Constants.authorizationEmail,Constants.password);
+        signInPage = accountInformationPage.tabSave();
     }
 }

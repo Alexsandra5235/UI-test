@@ -1,6 +1,6 @@
 import io.qameta.allure.Description;
-import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import org.example.Constants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,19 +19,14 @@ public class AddProductToWishListTest extends BaseTest{
     @Tag("positive")
     @Test
     public void authorizationUsers(){
-        mainPage.tabSignIn();
+        signInPage = mainPage.tabSignIn();
+        signInPage.fullingEmailAndPassword(Constants.authorizationEmail,Constants.password);
+        mainPage = signInPage.tabSignIn();
+        categoryWomenPage = mainPage.tabWomen();
+        cardProductPage = categoryWomenPage.tabCardProduct();
+        wishListPage = cardProductPage.tabAddToWishList();
 
-        signInPage.fullingEmail(constants.authorizationEmail);
-        signInPage.fullingPassword(constants.password);
-        signInPage.tabSignIn();
-
-        myAccountPage.tabWomen();
-
-        categoryWomenPage.tabCardProduct();
-
-        cardProductPage.tabAddToWishList();
-
-        assertTrue(wishListPage.visibleMessengerSuccess());
+        assertTrue(wishListPage.isVisibleMessengerSuccess());
 
     }
 }

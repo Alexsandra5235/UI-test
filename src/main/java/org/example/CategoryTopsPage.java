@@ -1,67 +1,94 @@
 package org.example;
 
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import io.qameta.allure.Step;
 
-public class CategoryTopsPage extends BasePage{
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
+
+public class CategoryTopsPage {
+
+    public final SelenideElement
+            optionSize = $x("//div[@data-role=\"content\"]//*[@option-id=\"166\"]"),
+            optionColor = $x("//div[@data-role=\"content\"]//*[@option-id=\"49\"]"),
+            optionDropDownSize = $x("//*[@id=\"narrow-by-list\"]/div[3]"),
+            optionDropDownColor = $x("//*[@id=\"narrow-by-list\"]/div[4]");
+    public final ElementsCollection
+            buttonNextPageProduct = $$x("//div[@class=\"pages\"]//li[@class=\"item pages-item-next\"]/a"),
+            listItemProductsSelectedSize = $$x("//li[@class=\"item product product-item\"]//div[@class=\"swatch-attribute size\"]"),
+            listItemProductsSelectedColor = $$x("//li[@class=\"item product product-item\"]//div[@class=\"swatch-attribute color\"]"),
+            listItemProductsHref = $$x("//li[@class=\"item product product-item\"]//a[@class=\"product photo product-item-photo\"]");
     /**
      * Выбор размера
      */
     @Step("Выбор размера товара")
     public void choiceSize(){
-        $(By.xpath("//*[@id=\"narrow-by-list\"]/div[3]")).click();
-        $(By.xpath("//div[@data-role=\"content\"]//*[@option-id=\"166\"]")).click();
+        optionDropDownSize.shouldBe(visible).click();
+        optionSize.shouldBe(visible).click();
     }
     /**
      * Выбор цвета
      */
     @Step("Выбор цвета товара")
     public void choiceColor(){
-        $(By.xpath("//*[@id=\"narrow-by-list\"]/div[4]")).click();
-        $(By.xpath("//div[@data-role=\"content\"]//*[@option-id=\"49\"]")).click();
+        optionDropDownColor.shouldBe(visible).click();
+        optionColor.shouldBe(visible).click();
     }
     /**
      * Нажатие кнопку для перехода на следующую страницу
      */
     @Step("Нажатие кнопку для перехода на следующую страницу товаров")
     public void tabNextPage(){
-        $$(By.xpath("//div[@class=\"pages\"]//li[@class=\"item pages-item-next\"]/a")).last().click();
+        buttonNextPageProduct.last().shouldBe(visible).click();
     }
     /**
      * Проверка правильности фильтровки товара
      */
     @Step("Проверка корректности фильтровки товара")
-    public boolean correctFiltering(){
-        List<String> listSize = $$(By.xpath("//li[@class=\"item product product-item\"]//div[@class=\"swatch-attribute size\"]"))
-                .asFixedIterable().stream().map(elem->elem.getAttribute("option-selected")).toList();
+    public boolean isCorrectFiltering(){
+        List<String> listSize = listItemProductsSelectedSize
+                .asFixedIterable()
+                .stream()
+                .map(elem->elem.shouldBe(visible).getAttribute("option-selected")).toList();
+        List<String> listColor = listItemProductsSelectedColor
+                .asFixedIterable()
+                .stream()
+                .map(elem->elem.shouldBe(visible).getAttribute("option-selected")).toList();
 
-        List<String> listColor = $$(By.xpath("//li[@class=\"item product product-item\"]//div[@class=\"swatch-attribute color\"]"))
-                .asFixedIterable().stream().map(elem->elem.getAttribute("option-selected")).toList();
+        List<String> list = Stream.concat(listSize.stream(),listColor.stream()).toList();
 
-        List<String> list = Stream.concat(listSize.stream(),listColor.stream()).collect(Collectors.toList());
-
-        return list.stream().allMatch(elem->elem.contains(constants.optionIdSizeXs) | elem.contains(constants.optionsIdColorBlack));
+        return list.stream()
+                .allMatch(elem->elem.contains(Constants.optionIdSizeXs) | elem.contains(Constants.optionsIdColorBlack));
     }
     /**
      * Проверка пагинации сайта
      */
     @Step("Проверка пагинации на сайте")
-    public int pagination(){
-        List<String> listOnePage = $$(By.xpath("//li[@class=\"item product product-item\"]//a[@class=\"product photo product-item-photo\"]"))
-                .asFixedIterable().stream().map(elem->elem.getAttribute("href")).toList();
+    public boolean isCheckPagination(){
+        List<String> listOnePage = listItemProductsHref
+                .asFixedIterable()
+                .stream()
+                .map(elem->elem.shouldBe(visible).getAttribute("href")).toList();
         tabNextPage();
-        List<String> listTwoPage = $$(By.xpath("//li[@class=\"item product product-item\"]//a[@class=\"product photo product-item-photo\"]"))
-                .asFixedIterable().stream().map(elem->elem.getAttribute("href")).toList();
-        List<String> list = Stream.concat(listOnePage.stream(),listTwoPage.stream()).collect(Collectors.toList());
-        int uniqueValues = list.stream().distinct().collect(Collectors.toList()).size();
-        return uniqueValues;
+        List<String> listTwoPage = listItemProductsHref
+                .asFixedIterable()
+                .stream()
+                .map(elem->elem.shouldBe(visible).getAttribute("href")).toList();
 
+        List<String> list = Stream.concat(listOnePage.stream(),listTwoPage.stream()).toList();
+
+        int uniqueValues = list.stream().distinct().toList().size();
+
+        if (uniqueValues == listOnePage.size() + listTwoPage.size()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
